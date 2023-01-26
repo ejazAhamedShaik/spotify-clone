@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Sidebar.tsx", "middleware.api.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Sidebar.tsx", "middleware.tsx", "hooks/useSpotify.js"],
   "exclude": ["node_modules"]
 }

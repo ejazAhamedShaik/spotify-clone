@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   HomeIcon,
   LibraryIcon,
@@ -8,17 +8,34 @@ import {
 import { HeartIcon } from "@heroicons/react/outline";
 import { RssIcon } from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
+import useSpotify from "../hooks/useSpotify";
+import { PlayListInterface } from "../types/PlayListsInterface";
+import { useRecoilState } from "recoil";
+import { playlistIdState } from "../atoms/playlistAtom";
 
 const Sidebar = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const [playlists, setPlaylists] = useState<PlayListInterface[]>([]);
+  const [_, setPlaylistId] = useRecoilState(playlistIdState);
+  const spotifyApi = useSpotify();
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((res) => setPlaylists(res.body.items));
+    }
+  }, [session, spotifyApi]);
+
+  const handleSignOut = (e: React.MouseEvent<HTMLElement>) => {
+    console.log("Logging out...");
+    e.preventDefault();
+    signOut({ callbackUrl: "/login" });
+  };
   return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900">
+    <div className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex">
       <div className="space-y-4">
         <button
           className="flex item-center space-x-2 hover:text-white"
-          onClick={() =>
-            signOut()
-          }
+          onClick={handleSignOut}
         >
           <p>Log out</p>
         </button>
@@ -51,25 +68,15 @@ const Sidebar = () => {
         <hr className="border-t-[0.1px] border-gray-900" />
 
         {/* Custom Playlist */}
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
-        <p>Playlist Name...</p>
+        {playlists.map((playlist) => (
+          <p
+            key={playlist.id}
+            className="cursor-pointer hover:text-white"
+            onClick={() => setPlaylistId(playlist.id)}
+          >
+            {playlist.name}
+          </p>
+        ))}
       </div>
     </div>
   );
