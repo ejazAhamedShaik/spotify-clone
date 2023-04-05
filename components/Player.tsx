@@ -30,9 +30,9 @@ const Player = () => {
   console.log(previewUrl);
   useEffect(() => {
     // fetchCurrentSong();
-    setPreviewUrl(() =>
-      songInfo.preview_url !== null ? songInfo.preview_url : ""
-    );
+    // setPreviewUrl(() =>
+    //   songInfo.preview_url !== null ? songInfo.preview_url : ""
+    // );
     setVolume(50);
   }, [previewUrl]);
 
