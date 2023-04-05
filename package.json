@@ -9,10 +9,11 @@
     "@heroicons/react": "^1.0.6",
     "lodash": "^4.17.21",
     "next": "latest",
-    "next-auth": "^4.0.0-beta.7",
+    "next-auth": "^4.19.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recoil": "^0.7.6",
+    "spotify-web-api-js": "^1.5.2",
     "spotify-web-api-node": "^5.0.2",
     "tailwind-scrollbar-hide": "^1.1.7"
   },

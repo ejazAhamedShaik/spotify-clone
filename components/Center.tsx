@@ -7,6 +7,7 @@ import { playlistIdState, playlistState } from "../atoms/playlistAtom";
 import useSpotify from "../hooks/useSpotify";
 import Songs from "./Songs";
 import { PlayListInterface } from "../types/PlayListsInterface";
+import { signOut } from "next-auth/react";
 
 const colors = [
   "from-indigo-500",
@@ -35,12 +36,11 @@ const Center = () => {
       .then((res) => setPlaylist(res.body))
       .catch((err) => console.log("Something went wront! " + err));
   }, [spotifyApi, playlistId]);
-  console.log(playlist);
 
   return (
     <div className="flex-grow text-white h-screen overflow-y-scroll scrollbar-hide">
       <header className="absolute top-5 right-8">
-        <div className="flex items-center text-white bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-2 pr-2">
+        <div onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center text-white bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-2 pr-2">
           <img
             src={session?.user?.image as string}
             className="rounded-full w-10 h-10"

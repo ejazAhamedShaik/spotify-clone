@@ -16,7 +16,6 @@ interface ProviderProps {
 }
 
 const Login = ({ providers }: ProviderProps) => {
-  console.log(providers);
   return (
     <div className="flex flex-col items-center bg-black min-h-screen w-100 justify-center">
       <img
@@ -29,7 +28,6 @@ const Login = ({ providers }: ProviderProps) => {
           <button
             className="bg-[#18D160] text-white p-5 rounded-full"
             onClick={() => {
-              console.log("signing in...");
               signIn(provider.id, { callbackUrl: "/" });
             }}
           >

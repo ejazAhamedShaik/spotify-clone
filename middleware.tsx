@@ -7,15 +7,10 @@ export async function middleware(req: any) {
   const token = await getToken({ req, secret: secret });
   const { pathname } = req.nextUrl;
 
-  if (pathname.includes("/api/auth") || token) {
-    return NextResponse.next();
-  }
+  if (pathname.includes("/api/auth") || token) return NextResponse.next();
 
-  if (!token && pathname !== "/login") {
-    // const url = req.nextUrl
-    // url.pathname = '/login'
-    return NextResponse.rewrite(new URL('/login', req.url));
-  }
+  if (!token && pathname !== "/login")
+    return NextResponse.rewrite(new URL("/login", req.url));
 }
 
 export const config = {

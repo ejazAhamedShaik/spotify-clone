@@ -19,26 +19,17 @@ const Sidebar = () => {
   const [_, setPlaylistId] = useRecoilState(playlistIdState);
   const spotifyApi = useSpotify();
 
+  console.log(spotifyApi)
+
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       spotifyApi.getUserPlaylists().then((res) => setPlaylists(res.body.items));
     }
   }, [session, spotifyApi]);
-
-  const handleSignOut = (e: React.MouseEvent<HTMLElement>) => {
-    console.log("Logging out...");
-    e.preventDefault();
-    signOut({ callbackUrl: "/login" });
-  };
+  
   return (
     <div className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex">
       <div className="space-y-4">
-        <button
-          className="flex item-center space-x-2 hover:text-white"
-          onClick={handleSignOut}
-        >
-          <p>Log out</p>
-        </button>
         <button className="flex item-center space-x-2 hover:text-white">
           <HomeIcon className="h-5 w-5" />
           <p>Home</p>
